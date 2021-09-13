@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Box from "./Box";
+
+const boxes = Array(200).fill(" ");
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>React-lazyload-hook</h1>
+        <p>Scroll down</p>
       </header>
+      <ul className="list">
+        {boxes.map((box, index) => (
+          <li className="item" key={index}>
+            <Box className="box" id={index} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
