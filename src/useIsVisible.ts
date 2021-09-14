@@ -4,7 +4,7 @@ import { checkVisible, off, on } from "./utils";
 
 let listeners: Listener[] = [];
 
-function updateIsVisible(
+function updateStateAndListeners(
   visible: boolean,
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>,
   element: HTMLElement,
@@ -21,7 +21,7 @@ function updateIsVisible(
 export function lazyLoadHandler() {
   listeners.forEach(({ element, offsets, setIsVisible, once }) => {
     const visible = checkVisible(element, offsets);
-    updateIsVisible(visible, setIsVisible, element, once);
+    updateStateAndListeners(visible, setIsVisible, element, once);
   });
 }
 
@@ -48,7 +48,7 @@ export function useIsVisible(
     });
 
     const visible = checkVisible(element, offsets);
-    updateIsVisible(visible, setIsVisible, element, once);
+    updateStateAndListeners(visible, setIsVisible, element, once);
 
     return function cleanup() {
       const index = listeners
@@ -62,5 +62,6 @@ export function useIsVisible(
       off(window, "scroll", lazyLoadHandler, { passive: true });
     };
   }, [once, bottomOffset, topOffset]);
+
   return [ref, isVisible];
 }
