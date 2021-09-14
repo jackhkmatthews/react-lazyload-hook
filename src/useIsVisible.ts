@@ -26,7 +26,9 @@ export function lazyLoadHandler() {
 }
 
 export function useIsVisible(
-  offsets: Offsets,
+  // Seperate arguments for use in useEffect dep array
+  bottomOffset: number,
+  topOffset: number,
   once = false
 ): [React.MutableRefObject<HTMLElement>, boolean] {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,6 +36,7 @@ export function useIsVisible(
 
   useEffect(() => {
     const element = ref.current;
+    const offsets: Offsets = [bottomOffset, topOffset];
     on(window, "scroll", lazyLoadHandler, { passive: true });
     on(window, "resize", lazyLoadHandler, { passive: true });
 
@@ -58,6 +61,6 @@ export function useIsVisible(
       off(window, "resize", lazyLoadHandler, { passive: true });
       off(window, "scroll", lazyLoadHandler, { passive: true });
     };
-  }, [offsets, once]);
+  }, [once, bottomOffset, topOffset]);
   return [ref, isVisible];
 }

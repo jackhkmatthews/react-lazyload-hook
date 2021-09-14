@@ -7,7 +7,7 @@ type BoxProps = {
 };
 
 const Box: FunctionComponent<BoxProps> = ({ id, className }) => {
-  const [ref, isVisible] = useIsVisible([-300, 0], true);
+  const [ref, isVisible] = useIsVisible(-300, 0, true);
   return (
     <div
       ref={ref as unknown as React.MutableRefObject<HTMLDivElement>}
